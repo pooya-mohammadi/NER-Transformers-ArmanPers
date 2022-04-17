@@ -31,6 +31,16 @@ following commands:
  python prepare_dataset.py --in_files train_fold1.txt train_fold2.txt train_fold3.txt --out_path train.txt
  python prepare_dataset.py --in_files test_fold1.txt test_fold2.txt test_fold3.txt --out_path test.txt
 ```
+To have a validation sample run the following code:
+```commandline
+python split_dataset.py --in_file train.txt --part_1 train.txt --part_2 val.txt
+```
+
+## Train
+To train the model use the following notebook
+```commandline
+ArmanPers-NER.ipynb
+```
 
 ## References
 1. https://colab.research.google.com/github/huggingface/notebooks/blob/main/examples/token_classification.ipynb#scrollTo=n9qywopnIrJH
