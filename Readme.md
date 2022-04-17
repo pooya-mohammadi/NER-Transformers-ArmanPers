@@ -74,7 +74,31 @@ ArmanPers-NER.ipynb
 | 10    | 0.013         | 0.038        | 0.921     | 0.928  | 0.924 | 0.992    |
 +-------+---------------+--------------+-----------+--------+-------+----------+
 ```
-
+## Test
+```
+example = "پویا محمدی در سازمان کشاورزی چه کاری میتواند بکند ؟"
+tokens = tokenizer(example)
+predictions, labels, _ = trainer.predict([tokens])
+predictions = np.argmax(predictions, axis=2)
+true_predictions = [[label_list[p] for p in prediction] for prediction in predictions]
+for t, t_p in zip(tokenizer.decode(token_ids=tokens['input_ids']).split(" "), true_predictions[0]):
+    print(t, " -> ", t_p)
+```
+test result:
+```commandline
+[CLS]  ->  O
+پویا  ->  B-pers
+محمدی  ->  I-pers
+در  ->  O
+سازمان  ->  B-org
+کشاورزی  ->  I-org
+چه  ->  O
+کاری  ->  O
+میتواند  ->  O
+بکند  ->  O
+؟  ->  O
+[SEP]  ->  O
+```
 ## References
 1. https://colab.research.google.com/github/huggingface/notebooks/blob/main/examples/token_classification.ipynb#scrollTo=n9qywopnIrJH
 2. https://github.com/HaniehP/PersianNER
