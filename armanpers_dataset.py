@@ -1,5 +1,3 @@
-# Ref: https://github.com/huggingface/datasets/blob/master/datasets/conll2003/conll2003.py
-
 import datasets
 import os
 from pathlib import Path
@@ -35,7 +33,7 @@ class ArmanPers(datasets.GeneratorBasedBuilder):
 
     def __init__(self,
                  *args,
-                 cache_dir,
+                 cache_dir=None,
                  train_file="train.txt",
                  val_file="val.txt",
                  test_file="test.txt",
@@ -54,7 +52,6 @@ class ArmanPers(datasets.GeneratorBasedBuilder):
                            'O'),
                  **kwargs):
         self._ner_tags = ner_tags
-        # self._url = url
         self._train_file = train_file
         self._val_file = val_file
         self._test_file = test_file
@@ -129,14 +126,15 @@ class HFArmanPersDataset:
     """
     NAME = "HFArmanPersDataset"
 
-    def __init__(self):
-        cache_dir = os.path.join(str(Path.home()), '.pooya-mohammadi')
-        print("Cache directory: ", cache_dir)
-        os.makedirs(cache_dir, exist_ok=True)
-        download_config = DownloadConfig(cache_dir=cache_dir)
-        self._dataset = ArmanPers(cache_dir=cache_dir)
+    def __init__(self, train_path, val_path, test_path, cache_dir=None):
+        if cache_dir is not None:
+            os.makedirs(cache_dir, exist_ok=True)
+        self._dataset = ArmanPers(cache_dir=cache_dir,
+                                  train_file=train_path,
+                                  val_file=val_path,
+                                  test_file=test_path)
         print("Cache1 directory: ", self._dataset.cache_dir)
-        self._dataset.download_and_prepare(download_config=download_config)
+        self._dataset.download_and_prepare(download_config=DownloadConfig(cache_dir=cache_dir))
         self._dataset = self._dataset.as_dataset()
 
     @property
@@ -166,7 +164,7 @@ class HFArmanPersDataset:
 
 
 if __name__ == '__main__':
-    dataset = HFArmanPersDataset().dataset
+    dataset = HFArmanPersDataset(train_path="train.txt", val_path="val.txt", test_path="test.txt").dataset
 
     print(dataset['train'])
     print(dataset['test'])
