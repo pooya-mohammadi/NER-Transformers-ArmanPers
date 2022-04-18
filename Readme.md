@@ -1,6 +1,6 @@
 # NER-Transformers-ArmanPers
 
-In this repository, a complete fine-tuning process of `HooshvareLab/roberta-fa-zwnj-base` over `ArmanPers` dataset
+In this repository, a complete fine-tuning process of `HooshvareLab/distilbert-fa-zwnj-base` over `ArmanPers` dataset
 using `Transformers` library is presented. `ArmanPers` is a name entity recognition dataset which is
 for Persian language and is publicly available through a GitHub repository. Although this is a public dataset,
 Transformers's datasets library does not include it so a custom dataset is required which is provided in this repository
